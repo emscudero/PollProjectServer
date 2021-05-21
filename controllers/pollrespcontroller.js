@@ -6,7 +6,7 @@ const bcrypt = require('bcryptjs');
 
 
 router.get('/test', function(req, res){
-    res.send("this is a test from pollcontroller")
+    res.send("this is a test from pollrespcontroller")
 })
 
 
