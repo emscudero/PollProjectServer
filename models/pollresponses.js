@@ -1,16 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
     const Responses = sequelize.define("responses", {
         pollID: {
-            type: DataTypes.NUMBER,
-            allowNull: true,
+            type: DataTypes.INTEGER
         },
         pollSelection: {
             type: DataTypes.STRING,
-            allowNull: true,
+            allowNull: false,
         },
-        ownerID: {
-            type: DataTypes.STRING,
-            allowNull: true,
+        userID: {
+            type: DataTypes.INTEGER
         },
     });
     return Responses;
