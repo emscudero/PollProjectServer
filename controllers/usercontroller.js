@@ -18,7 +18,8 @@ http://localhost:3000/user/login - POST
  router.post('/create', function(req,res){
     User.create({
         email: req.body.email,
-        password: bcrypt.hashSync(req.body.password, 13)
+        password: bcrypt.hashSync(req.body.password, 13),
+        role: req.body.role
     })
 
     .then( user => {
