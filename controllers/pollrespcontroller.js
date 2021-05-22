@@ -61,6 +61,15 @@ http://localhost:3000/responses/getAllResp/:poll_id - GET
 })
 
 
-
+router.get('/countAll/:poll_id', validateSession, (req,res) => {
+    Responses.count({
+      where: {  pollID: req.params.poll_id }
+    })
+    .then(nbVotes => res.status(200).json({
+        votes: nbVotes,
+        message: 'Votes counted!.'
+    }))
+    .catch(err => res.status(500).json({error: err}))
+  })
 
 module.exports = router
