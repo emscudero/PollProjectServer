@@ -12,9 +12,10 @@ http://localhost:3000/user/login - POST
 
 */
 
-/*****************
+/************************************************************
  * USER - CREATE
- ****************/
+ * -> create a new user (choice between basci user or admin)
+ ***********************************************************/
  router.post('/create', function(req,res){
     User.create({
         email: req.body.email,
@@ -36,9 +37,10 @@ http://localhost:3000/user/login - POST
 });
 
 
-/***************
+/*************************************
 * USER - LOGIN
-***************/
+* -> connect to user/admin account
+************************************/
 
 router.post('/login', function(req,res) {
 
