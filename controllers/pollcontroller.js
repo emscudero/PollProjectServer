@@ -16,9 +16,13 @@ http://localhost:3000/poll/getAll - GET
 
 */
 
-/*****************
+/****************************************************************************
  * POLL - CREATE
- ****************/
+ * -> create a new poll ( question + answers - at least 2 responses up to 4)
+ * 
+ * Used for:
+ * - As an admin, I want to create a poll, so that people can vote on it 
+ ***************************************************************************/
  router.post('/create', validateSession, (req,res) => {
     const pollEntry = {
         question: req.body.question,
@@ -40,9 +44,13 @@ http://localhost:3000/poll/getAll - GET
 })
 
 
-/********************
-* POLL - DELETE  *
-*******************/
+/***************************************************************************************
+* POLL - DELETE  
+* -> delete a specific poll
+* 
+* Used for:
+* - As an admin, I want to be able to delete a poll, so I can keep the polls organized 
+****************************************************************************************/
 router.delete('/delete/:id', validateSession, (req,res) => {
     const query = { where: { id: req.params.id, userID: req.user.id} };
 
@@ -54,9 +62,13 @@ router.delete('/delete/:id', validateSession, (req,res) => {
 });
 
 
-/******************
- * POLL - UPDATE  *
- *****************/
+/*******************************************************
+ * POLL - UPDATE  
+ * -> edit and update a poll (question and/or responses)
+ * 
+ * Used for:
+ * - As an admin, I want to be able to edit a poll, so I can make changes
+ *******************************************************/
  router.put('/update/:id', validateSession, (req,res) => {
     const updatePollEntry = {
         question: req.body.question,
@@ -77,9 +89,15 @@ router.delete('/delete/:id', validateSession, (req,res) => {
 
 
 
-/****************
-* POLL - GETALL  *
-*****************/
+/**********************************************
+* POLL - GETALL  
+* -> get the list of a specific admin's polls 
+*
+* Used for: 
+* - As a user, I want to see a list of items, so I can vote on one
+* - As a user, I want to be able to see all of the poll questions, so that I know what are available to vote on
+* - As an admin, I want to be able to see all the poll questions, so that I can know what is available for users to vote on
+**********************************************/
 router.get('/getAll', validateSession, (req,res) => {
     Poll.findAll({
         where: { userID: req.user.id }

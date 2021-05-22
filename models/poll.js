@@ -7,11 +7,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     response1: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
     },
     response2: {
         type: DataTypes.STRING,
-        allowNull: true,
+        allowNull: false,
     },
     response3: {
         type: DataTypes.STRING,
