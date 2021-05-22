@@ -11,6 +11,7 @@ let validateSession = (require('../middleware/validate-sessions'));
 
 http://localhost:3000/responses/select/:poll_id - POST
 http://localhost:3000/responses/getAllResp/:poll_id - GET
+http://localhost:3000/responses/countAll/:poll_id - GET
 
 */
 
@@ -41,13 +42,13 @@ http://localhost:3000/responses/getAllResp/:poll_id - GET
 
 })
 
-/***************************************
+/*******************************************************************************************
  * RESPONSES - GETALL
  * -> get all votes for a specific poll
  * 
  * Used for:
  * - As an admin, I want to be able to see the results of the polls, so I can know what our team members think
- **************************************/
+ *******************************************************************************************/
  router.get('/getAllResp/:poll_id', validateSession, (req,res) => {
 
     const query = {
@@ -61,6 +62,13 @@ http://localhost:3000/responses/getAllResp/:poll_id - GET
 })
 
 
+/*********************************************************************************************
+ * RESPONSES - COUNTALL
+ * -> count all votes for a specific poll
+ * 
+ * Used for:
+ * - As a user, I want to see the vote totals after I submit mine, so I can see the current results
+ *********************************************************************************************/
 router.get('/countAll/:poll_id', validateSession, (req,res) => {
     Responses.count({
       where: {  pollID: req.params.poll_id }
