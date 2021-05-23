@@ -1,18 +1,22 @@
 let express = require("express");
 let router = express.Router();
-const User = require("../db").import("../models/user");
-const Responses = require("../db").import("../models/pollresponses");
+
+const Responses = require('../db').import('../models/pollresponses');
+
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 var sequelize = require("../db");
-let validateSession = require("../middleware/validate-sessions");
+let validateSession = (require('../middleware/validate-sessions'));
 
 /* Endpoints
+
 http://localhost:3000/responses/select/:poll_id - POST
 http://localhost:3000/responses/getAllResp/:poll_id - GET
 http://localhost:3000/responses/countAll/:poll_id - GET
+
 */
+
 
 /********************************
  * RESPONSES - SELECT
@@ -22,7 +26,7 @@ http://localhost:3000/responses/countAll/:poll_id - GET
  * - As a user, I want to select a single item from the list of choices, so I can cast my vote
  *******************************/
 router.post("/select/:poll_id", validateSession, (req, res) => {
-  if (req.user.role === "user" || req.user.role === "admin") {
+  if (req.user.role === "user") {
     const selection = {
       pollID: req.params.poll_id,
       pollSelection: req.body.selection,
@@ -41,6 +45,7 @@ router.post("/select/:poll_id", validateSession, (req, res) => {
     res.json({ message: "Not a User" });
   }
 });
+
 
 /*******************************************************************************************
  * RESPONSES - GETALL
@@ -71,7 +76,7 @@ router.get("/getAllResp/:poll_id", validateSession, (req, res) => {
  * - As a user, I want to see the vote totals after I submit mine, so I can see the current results
  *********************************************************************************************/
 router.get("/countAll/:poll_id", validateSession, (req, res) => {
-  if (req.user.role === "user" || req.user.role === "admin") {
+  if (req.user.role === "user") {
     Responses.count({
       where: { pollID: req.params.poll_id },
     })
