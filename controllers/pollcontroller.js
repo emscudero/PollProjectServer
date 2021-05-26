@@ -106,15 +106,31 @@ router.delete('/delete/:id', validateSession, (req,res) => {
 * -> get the list of a specific admin's polls 
 *
 * Used for: 
-* - As a user, I want to see a list of items, so I can vote on one
-* - As a user, I want to be able to see all of the poll questions, so that I know what are available to vote on
-* - As an admin, I want to be able to see all the poll questions, so that I can know what is available for users to vote on
+* - As an admin, I want to be able to see all the poll questions I created, so that I can know what is available for users to vote on
 **********************************************/
 router.get('/getAll', validateSession, (req,res) => {
-  if (req.user.role === "admin" || req.user.role === "user") {
+  if (req.user.role === "admin"){
     Poll.findAll({
       where: { userID: req.user.id },
     })
+      .then((polls) => res.status(200).json(polls))
+      .catch((err) => res.status(500).json({ error: err }));
+  } else {
+    res.json({ message: "Not an Admin" });
+  }
+});
+
+/**********************************************
+* POLL - SEEALL  
+* -> see aal of the poll questions
+*
+* Used for: 
+* - As a user, I want to see a list of items, so I can vote on one
+* - As a user, I want to be able to see all of the poll questions, so that I know what are available to vote onvote on
+**********************************************/
+router.get('/seeAll', validateSession, (req,res) => {
+  if (req.user.role === "user") {
+    Poll.findAll()
       .then((polls) => res.status(200).json(polls))
       .catch((err) => res.status(500).json({ error: err }));
   } else {
