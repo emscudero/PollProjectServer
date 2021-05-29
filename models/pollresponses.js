@@ -1,13 +1,13 @@
 module.exports = (sequelize, DataTypes) => {
   const Responses = sequelize.define("responses", {
-    pollID: {
+    pollid: {
       type: DataTypes.INTEGER,
     },
-    pollSelection: {
+    pollselection: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    userID: {
+    userid: {
       type: DataTypes.INTEGER,
     },
   });
