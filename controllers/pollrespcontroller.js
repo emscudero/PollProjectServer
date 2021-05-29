@@ -72,7 +72,7 @@ router.get("/getResult/:poll_id", validateSession, (req, res) => {
 
 /*******************************************************************************************
  * RESPONSES - GETALL
- * -> get all votes for all polls of admin
+ * -> get all votes for all polls
  *
  * Used for:
  * - As an admin, I want to be able to see the results of the polls, so I can know what our team members think
@@ -85,13 +85,19 @@ router.get("/getResult/:poll_id", validateSession, (req, res) => {
 
     Responses.findOne(query)
       .then(response => {
+        // sequelize.query(
+        //   `SELECT responses.pollid, responses.pollselection 
+        //   FROM responses
+        //   INNER JOIN polls
+        //     on (polls.id = responses.pollid)
+        //   INNER JOIN users
+        //    on (users.id = polls.userid) where (users.id = ${req.user.id})`
+        // )
         sequelize.query(
           `SELECT responses.pollid, responses.pollselection 
           FROM responses
           INNER JOIN polls
-            on (polls.id = responses.pollid)
-          INNER JOIN users
-            on (users.id = polls.userid) where (users.id = ${req.user.id})`
+            on (polls.id = responses.pollid)`
         )
         .then(
           ([results, metadata]) => {
