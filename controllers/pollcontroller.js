@@ -19,13 +19,12 @@ http://localhost:3000/poll/getAll - GET
 /****************************************************************************
  * POLL - CREATE
  * -> create a new poll ( question + answers - at least 2 responses up to 4)
- * 
+ *
  * Used for:
- * - As an admin, I want to create a poll, so that people can vote on it 
+ * - As an admin, I want to create a poll, so that people can vote on it
  ***************************************************************************/
- router.post('/create', validateSession, (req,res) => {
-   if (req.user.role === "admin") {
-
+router.post("/create", validateSession, (req, res) => {
+  if (req.user.role === "admin") {
     const pollEntry = {
       question: req.body.question,
       response1: req.body.response1,
@@ -48,15 +47,17 @@ http://localhost:3000/poll/getAll - GET
 });
 
 /***************************************************************************************
-* POLL - DELETE  
-* -> delete a specific poll
-* 
-* Used for:
-* - As an admin, I want to be able to delete a poll, so I can keep the polls organized 
-****************************************************************************************/
-router.delete('/delete/:id', validateSession, (req,res) => {
+ * POLL - DELETE
+ * -> delete a specific poll
+ *
+ * Used for:
+ * - As an admin, I want to be able to delete a poll, so I can keep the polls organized
+ ****************************************************************************************/
+router.delete("/delete/:id", validateSession, (req, res) => {
   if (req.user.role === "admin") {
+
     const query = { where: { id: req.params.id, userid: req.user.id} };
+
 
     Poll.destroy(query)
       .then((response) =>
@@ -71,13 +72,13 @@ router.delete('/delete/:id', validateSession, (req,res) => {
 });
 
 /*******************************************************
- * POLL - UPDATE  
+ * POLL - UPDATE
  * -> edit and update a poll (question and/or responses)
- * 
+ *
  * Used for:
  * - As an admin, I want to be able to edit a poll, so I can make changes
  *******************************************************/
- router.put('/update/:id', validateSession, (req,res) => {
+router.put("/update/:id", validateSession, (req, res) => {
   if (req.user.role === "admin") {
     const updatePollEntry = {
       question: req.body.question,
@@ -102,31 +103,30 @@ router.delete('/delete/:id', validateSession, (req,res) => {
 });
 
 /**********************************************
-* POLL - GETALL  
-* -> get all the poll questions
-*
-* Used for: 
-* - As a user, I want to see a list of items, so I can vote on one
-* - As a user, I want to be able to see all of the poll questions, so that I know what are available to vote onvote on
-* - As an admin, I want to be able to see all the poll questions I created, so that I can know what is available for users to vote on
-**********************************************/
-router.get('/getAll', validateSession, (req,res) => {
-    Poll.findAll()
-      .then((polls) => res.status(200).json(polls))
-      .catch((err) => res.status(500).json({ error: err }));
+ * POLL - GETALL
+ * -> get all the poll questions
+ *
+ * Used for:
+ * - As a user, I want to see a list of items, so I can vote on one
+ * - As a user, I want to be able to see all of the poll questions, so that I know what are available to vote onvote on
+ * - As an admin, I want to be able to see all the poll questions I created, so that I can know what is available for users to vote on
+ **********************************************/
+router.get("/getAll", validateSession, (req, res) => {
+  Poll.findAll()
+    .then((polls) => res.status(200).json(polls))
+    .catch((err) => res.status(500).json({ error: err }));
 });
-
 
 /* ----- NOT USED BELOW----- */
 /**********************************************
-* POLL - SEEALL  
-* -> see aal of the poll questions
-*
-* Used for: 
-* - As a user, I want to see a list of items, so I can vote on one
-* - As a user, I want to be able to see all of the poll questions, so that I know what are available to vote onvote on
-**********************************************/
-router.get('/seeAll', validateSession, (req,res) => {
+ * POLL - SEEALL
+ * -> see aal of the poll questions
+ *
+ * Used for:
+ * - As a user, I want to see a list of items, so I can vote on one
+ * - As a user, I want to be able to see all of the poll questions, so that I know what are available to vote onvote on
+ **********************************************/
+router.get("/seeAll", validateSession, (req, res) => {
   if (req.user.role === "user") {
     Poll.findAll()
       .then((polls) => res.status(200).json(polls))

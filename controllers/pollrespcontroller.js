@@ -1,13 +1,13 @@
 let express = require("express");
 let router = express.Router();
 
-const Responses = require('../db').import('../models/pollresponses');
+const Responses = require("../db").import("../models/pollresponses");
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 var sequelize = require("../db");
-let validateSession = (require('../middleware/validate-sessions'));
+let validateSession = require("../middleware/validate-sessions");
 
 /* Endpoints
 
@@ -17,7 +17,6 @@ http://localhost:3000/responses/getAllResults - GET
 http://localhost:3000/responses/countAll/:poll_id - GET
 
 */
-
 
 /********************************
  * RESPONSES - SELECT
@@ -46,7 +45,6 @@ router.post("/select/:poll_id", validateSession, (req, res) => {
     res.json({ message: "Not a User" });
   }
 });
-
 
 /*******************************************************************************************
  * RESPONSES - GETRES
