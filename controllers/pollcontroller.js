@@ -31,7 +31,7 @@ router.post("/create", validateSession, (req, res) => {
       response2: req.body.response2,
       response3: req.body.response3,
       response4: req.body.response4,
-      userID: req.user.id,
+      userid: req.user.id,
     };
     Poll.create(pollEntry)
       .then((poll) => {
@@ -55,7 +55,9 @@ router.post("/create", validateSession, (req, res) => {
  ****************************************************************************************/
 router.delete("/delete/:id", validateSession, (req, res) => {
   if (req.user.role === "admin") {
-    const query = { where: { id: req.params.id, userID: req.user.id } };
+
+    const query = { where: { id: req.params.id, userid: req.user.id} };
+
 
     Poll.destroy(query)
       .then((response) =>
